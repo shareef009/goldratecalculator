@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Rate Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #003300, #004d00);
+            margin: 0;
+            padding: 10px;
+            color: #d4af37;
+        }
+        .container {
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 15px;
+            background: linear-gradient(135deg, #002200, #003300);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            text-align: center;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #d4af37;
+        }
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #555;
+            background-color: #ffffff;
+            color: #004d00;
+            font-size: 1em;
+            box-shadow: none;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        button {
+            width: 100%;
+            padding: 8px;
+            background-color: #005500;
+            color: #ffffff;
+            border: none;
+            font-size: 0.9em;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #007700;
+        }
+        .result {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .result-box {
+            background: linear-gradient(145deg, #d4af37, #e6b800);
+            padding: 10px;
+            text-align: center;
+            color: #004d00;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .result-box h4 {
+            margin: 0;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+        .result-box p {
+            margin: 8px 0 0;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Gold Rate Calculator</h2>
+    <div class="container">
+        <label for="pricePerOunce">Price per Ounce (in USD):</label>
+        <input type="number" id="pricePerOunce" placeholder="Enter price per ounce" required>
+        <button onclick="calculateGoldRate()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateGoldRate() {
+            const pricePerOunce = parseFloat(document.getElementById('pricePerOunce').value);
+            if (isNaN(pricePerOunce) || pricePerOunce <= 0) {
+                document.getElementById('result').innerText = 'Please enter a valid price per ounce.';
+                return;
+            }
+
+            const gramsPerOunce = 31.1035;
+            const pricePerGramUSD = pricePerOunce / gramsPerOunce;
+            const conversionRateToAED = 3.674;
+            const pricePerGramAED = pricePerGramUSD * conversionRateToAED;
+			
+			// Calculations for 100% purity
+            const priceForKgUSD = pricePerGramUSD * 1000;
+            const priceForKgAED = pricePerGramAED * 1000;
+            
+			// Calculations for 0.999 purity
+            const priceForPurityAED = pricePerGramAED * 0.999;
+            const finalPriceAED = priceForPurityAED * 116.64;
+
+            // Calculations for 0.9999 purity
+            // const priceForPurity9999PerGramUSD = pricePerGramUSD * 1;
+            // const priceForPurity9999PerGramAED = pricePerGramAED * 1;
+            // const priceForPurity9999PerKgUSD = priceForPurity9999PerGramUSD * 1000;
+            // const priceForPurity9999PerKgAED = priceForPurity9999PerGramAED * 1000;
+
+            document.getElementById('result').innerHTML = `
+                <div class="result-box">
+                    <h4>Price per Gram</h4>
+                    <p>${pricePerGramUSD.toFixed(2)} USD</p>
+                </div>
+                <div class="result-box">
+                    <h4>Price per Gram</h4>
+                    <p>${pricePerGramAED.toFixed(2)} AED</p>
+                </div>
+                <div class="result-box">
+                    <h4>Price per KG</h4>
+                    <p>${priceForKgUSD.toFixed(2)} USD</p>
+                </div>
+                <div class="result-box">
+                    <h4>Price per KG</h4>
+                    <p>${priceForKgAED.toFixed(2)} AED</p>
+                </div>
+                
+                <div class="result-box">
+                    <h4>Price for 0.999 Purity</h4>
+                    <p>${priceForPurityAED.toFixed(2)} AED</p>
+                </div>
+                <div class="result-box">
+                    <h4>TT Bar</h4>
+                    <p>${finalPriceAED.toFixed(2)} AED</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
