@@ -1,6 +1,6 @@
 {
   "name": "Gold Rate Calculator",
-  "short_name": "GoldCalc",
+  "short_name": "Gold App",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#003300",
