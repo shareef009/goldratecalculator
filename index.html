@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="manifest" href="manifest.json">
+
     <title>Gold Rate Calculator</title>
     <style>
         body {
@@ -84,6 +86,7 @@
     </style>
 </head>
 <body>
+	
     <h2>Gold Rate Calculator</h2>
     <div class="container">
         <label for="pricePerOunce">Price per Ounce (in USD):</label>
@@ -91,6 +94,17 @@
         <button onclick="calculateGoldRate()">Calculate</button>
         <div class="result" id="result"></div>
     </div>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('service-worker.js').then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
 
     <script>
         function calculateGoldRate() {
